@@ -4,7 +4,8 @@
   "description": "https://github.com/annakozacenko/mesto-project-ff.git",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack"
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve"
   },
   "keywords": [],
   "author": "",
