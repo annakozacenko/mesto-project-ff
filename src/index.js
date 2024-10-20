@@ -1,7 +1,16 @@
-console.log('Hello, World!')
-const numbers = [2, 3, 5];
+// index.js
 
-// Стрелочная функция. Не запнётся ли на ней Internet Explorer?
-const doubledNumbers = numbers.map(number => number * 2);
+import './styles/index.css'; // добавьте импорт главного файла стилей
 
-console.log(doubledNumbers); // 4, 6, 10
+// теперь картинки можно импортировать,
+// вебпак добавит в переменные правильные пути
+const jordanImage = new URL('./images/jordan.jpg', import.meta.url);
+const jamesImage = new URL('./images/james.jpg', import.meta.url);
+const bryantImage = new URL('./images/bryant.jpg', import.meta.url)
+
+const whoIsTheGoat = [
+  // меняем исходные пути на переменные
+  { name: 'Michael Jordan', link: jordanImage },
+  { name: 'Lebron James', link: jamesImage },
+  { name: 'Kobe Bryant', link: bryantImage },
+];
