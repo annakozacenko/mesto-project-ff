@@ -1,0 +1,17 @@
+{
+  "name": "mesto-project-ff",
+  "version": "1.0.0",
+  "description": "https://github.com/annakozacenko/mesto-project-ff.git",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
