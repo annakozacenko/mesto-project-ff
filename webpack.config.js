@@ -40,15 +40,16 @@ module.exports = {
     test: /\.css$/,
     // при обработке этих файлов нужно использовать
     // MiniCssExtractPlugin.loader и css-loader
-    use: [MiniCssExtractPlugin.loader, {
-      loader: 'css-loader',
+    use: [MiniCssExtractPlugin.loader, 
+       'css-loader',
+            'postcss-loader']
           // добавьте объект options
-    options: { importLoaders: 1 }
+
     }]
-  },
+  
       // Добавьте postcss-loader
-      'postcss-loader'
-      ]
+
+      
   },
   plugins: [
     new HtmlWebpackPlugin({
