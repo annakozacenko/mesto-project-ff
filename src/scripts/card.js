@@ -10,6 +10,7 @@ export function addCard(name, link, deleteFunction, likeFunction, imageClickFunc
   const cardLikeButton = card.querySelector('.card__like-button');
   cardTitle.textContent = name;
   cardImage.src = link;
+  cardImage.alt= name;
   cardDeleteButton.addEventListener('click', deleteFunction);
   cardLikeButton.addEventListener('click', likeFunction);
   cardImage.addEventListener('click', imageClickFunction);

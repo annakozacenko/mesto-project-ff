@@ -16,11 +16,11 @@ import {initialCards} from "./scripts/cards";
 //Попап редактирования профиля
 const editProfilePopup = document.querySelector(".popup_type_edit");
 
-// Находим форму в DOM -уточнить поиск формы, т.к. на странице есть несколько форм с классом popup__form
-const formElement = document.querySelector(".popup__form");
+// Находим форму в DOM 
+const formElement = document.forms["edit-profile"];
 // Находим поля формы в DOM -уточнить у чего вызывается метод querySelector
-const nameInput = document.querySelector(".popup__input_type_name");
-const jobInput = document.querySelector(".popup__input_type_description");
+const nameInput = formElement.querySelector(".popup__input_type_name");
+const jobInput = formElement.querySelector(".popup__input_type_description");
 // Находим элементы страницы, куда должны быть вставлены значения полей
 const profileTitleElement = document.querySelector(".profile__title");
 const profileDescriptionElement = document.querySelector(".profile__description");
@@ -59,9 +59,9 @@ const addCardPopup = document.querySelector(".popup_type_new-card");
 
 // Находим форму в DOM
 const formImageElement = document.forms["new-place"];
-// Находим поля формы в DOM-уточнить у чего вызывается метод querySelector
-const placeInput = document.querySelector(".popup__input_type_card-name");
-const placeLinkInput = document.querySelector(".popup__input_type_url");
+// Находим поля формы в DOM
+const placeInput = formImageElement.querySelector(".popup__input_type_card-name");
+const placeLinkInput = formImageElement.querySelector(".popup__input_type_url");
 
 
 
@@ -71,7 +71,7 @@ function handleFormImageSubmit(evt) {
     const newPlace = placeInput.value;
     const newPlaceLink = placeLinkInput.value;
 
-    cardsList.prepend(addCard(newPlace, newPlaceLink, deleteCard));
+    cardsList.prepend(addCard(newPlace, newPlaceLink, deleteCard, likeCard, openImagePopup));
     closeModal(addCardPopup);
 }
 //Обработчик формы добавления новой карточки
@@ -117,7 +117,7 @@ addListeners(imagePopup);
 
 //----------------------------------------------------------------
 
-// Шаблон карточки и список добавления карточек
+// Cписок добавления карточек
 
 const cardsList = document.querySelector('.places__list');
 
