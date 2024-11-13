@@ -1,33 +1,47 @@
 import './pages/index.css'; // добавьте импорт главного файла стилей
-import { deleteCard, likeCard, addCard} from './scripts/card';
+import { deleteCard, likeCard, addCard } from './scripts/card';
 import { openModal, closeModal, addListeners } from './scripts/modal';
-import {initialCards} from "./scripts/cards";
+import { initialCards } from "./scripts/cards";
 
 
 
-
-
-
-
-
-
-//----------------------------------------------------------------
 
 //Попап редактирования профиля
 const editProfilePopup = document.querySelector(".popup_type_edit");
 
-// Находим форму в DOM 
+// Форма редактирования профиля
 const formElement = document.forms["edit-profile"];
-// Находим поля формы в DOM -уточнить у чего вызывается метод querySelector
+// Поля формы
 const nameInput = formElement.querySelector(".popup__input_type_name");
 const jobInput = formElement.querySelector(".popup__input_type_description");
 // Находим элементы страницы, куда должны быть вставлены значения полей
 const profileTitleElement = document.querySelector(".profile__title");
 const profileDescriptionElement = document.querySelector(".profile__description");
 
+
+
+//Попап добавления новой карточки
+const addCardPopup = document.querySelector(".popup_type_new-card");
+
+// Форма добавления новой карточки
+const formImageElement = document.forms["new-place"];
+// Поля формы
+const placeInput = formImageElement.querySelector(".popup__input_type_card-name");
+const placeLinkInput = formImageElement.querySelector(".popup__input_type_url");
+
+
+
+
+//Попап открытия картинки
+const imagePopup = document.querySelector(".popup_type_image");
+
+// Cписок добавления карточек
+const cardsList = document.querySelector('.places__list');
+
+
 // Обработчик отправки формы редактирования профиля
 function handleFormSubmit(evt) {
-    evt.preventDefault(); 
+    evt.preventDefault();
     const newName = nameInput.value;
     const newDescription = jobInput.value;
 
@@ -51,17 +65,6 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
 //Слушатель на кнопки закрытия попапа
 addListeners(editProfilePopup);
 
-
-//----------------------------------------------------------------
-//Попап добавления новой карточки
-const addCardPopup = document.querySelector(".popup_type_new-card");
-
-
-// Находим форму в DOM
-const formImageElement = document.forms["new-place"];
-// Находим поля формы в DOM
-const placeInput = formImageElement.querySelector(".popup__input_type_card-name");
-const placeLinkInput = formImageElement.querySelector(".popup__input_type_url");
 
 
 
@@ -88,9 +91,8 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
 //Слушатель на кнопки закрытия попапа
 addListeners(addCardPopup);
 
-//----------------------------------------------------------------
-//Попап открытия картинки
-const imagePopup = document.querySelector(".popup_type_image");
+
+
 
 
 // Функция открытия попапа с картинкой
@@ -109,17 +111,14 @@ const openImagePopup = (evt) => {
 
 
 
-
 //Слушатель на кнопки закрытия попапа
 addListeners(imagePopup);
 
 
 
-//----------------------------------------------------------------
 
-// Cписок добавления карточек
 
-const cardsList = document.querySelector('.places__list');
+
 
 
 //Отрисовка существующих карточек
