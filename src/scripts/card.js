@@ -23,7 +23,5 @@ export function deleteCard(event) {
 
 // Функция лайка карточки
 export const likeCard = (event) => {
-console.log(event);
-  const button = event.target;
-  button.classList.toggle("card__like-button_is-active");
+  event.target.classList.toggle("card__like-button_is-active");
 };

@@ -9,15 +9,7 @@ import {initialCards} from "./scripts/cards";
 
 
 
-// Шаблон карточки и список добавления карточек
 
-const cardsList = document.querySelector('.places__list');
-
-
-//Отрисовка существующих карточек
-initialCards.forEach((card) => {
-    cardsList.append(addCard(card.name, card.link, deleteCard, likeCard, openImagePopup));
-});
 
 //----------------------------------------------------------------
 
@@ -123,3 +115,14 @@ addListeners(imagePopup);
 
 
 
+//----------------------------------------------------------------
+
+// Шаблон карточки и список добавления карточек
+
+const cardsList = document.querySelector('.places__list');
+
+
+//Отрисовка существующих карточек
+initialCards.forEach((card) => {
+    cardsList.append(addCard(card.name, card.link, deleteCard, likeCard, openImagePopup));
+});
