@@ -40,7 +40,7 @@ const cardsList = document.querySelector('.places__list');
 
 
 // Обработчик отправки формы редактирования профиля
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     const newName = nameInput.value;
     const newDescription = jobInput.value;
@@ -51,7 +51,7 @@ function handleFormSubmit(evt) {
 }
 
 //Обработчик формы редактирования профиля
-formElement.addEventListener("submit", handleFormSubmit);
+formElement.addEventListener("submit", handleProfileFormSubmit);
 
 
 //Слушатель на кнопку открытия попапа редактирования профиля
@@ -96,16 +96,13 @@ addListeners(addCardPopup);
 
 
 // Функция открытия попапа с картинкой
-const openImagePopup = (evt) => {
-    const card = evt.target.closest(".card");
-    const imageLink = card.querySelector(".card__image").src;
-    const imageTitle = card.querySelector(".card__title").textContent;
-
+const openImagePopup = (link,name) => {
     const image = imagePopup.querySelector(".popup__image");
     const caption = imagePopup.querySelector(".popup__caption");
 
-    image.src = imageLink;
-    caption.textContent = imageTitle;
+    image.src = link;
+    image.alt = name;
+    caption.textContent = name;
     openModal(imagePopup);
 };
 
