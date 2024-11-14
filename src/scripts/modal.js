@@ -10,10 +10,7 @@ const handleEscKeyUp = (e) => {
 
 // Функция открытия попапа
 export const openModal = (modal) => {
-  modal.classList.add("popup_is-animated");
-  setTimeout(() => {
-    modal.classList.add("popup_is-opened");
-  }, 0);
+  modal.classList.add("popup_is-opened");
   // Добавляем слушатель для закрытия по клавише Escape
   document.addEventListener("keyup", handleEscKeyUp);
 };
@@ -28,6 +25,7 @@ export const closeModal = (modal) => {
 
 // Функция добавления слушателя кнопки закрытия и оверлея
 export const addListeners = (popup) => {
+  popup.classList.add("popup_is-animated");
   const closeButton = popup.querySelector(".popup__close");
   // Закрытие попапа при клике на кнопку-крестик
   closeButton.addEventListener("click", () => {
