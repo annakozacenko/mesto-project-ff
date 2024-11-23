@@ -2,7 +2,7 @@ import './pages/index.css'; // добавьте импорт главного ф
 import { deleteCard, likeCard, addCard } from './scripts/card';
 import { openModal, closeModal, addListeners } from './scripts/modal';
 import { initialCards } from "./scripts/cards";
-
+import { setInputListener } from './scripts/validation';
 
 
 
@@ -122,3 +122,21 @@ addListeners(imagePopup);
 initialCards.forEach((card) => {
     cardsList.append(addCard(card.name, card.link, deleteCard, likeCard, openImagePopup));
 });
+
+
+
+
+
+
+
+//------для теста текста ошибок в попапе профиля------
+openModal(editProfilePopup);
+
+const dopchikForm = document.forms["edit-profile"];
+const dopchikNameInput = dopchikForm.querySelector(".popup__input_type_name");
+dopchikNameInput.value = 'в';
+
+const dopchikJobInput = dopchikForm.querySelector(".popup__input_type_description");
+
+
+setInputListener(dopchikForm, dopchikNameInput);
