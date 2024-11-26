@@ -26,7 +26,7 @@
   }
 }
 
-.popup__button.button_inactive {
+.popup__button.popup__button_disabled {
   pointer-events: none;
   user-select: none;
   opacity: 0.2;

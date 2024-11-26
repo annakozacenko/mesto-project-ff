@@ -2,7 +2,7 @@ import './pages/index.css'; // добавьте импорт главного ф
 import { deleteCard, likeCard, addCard } from './scripts/card';
 import { openModal, closeModal, addListeners } from './scripts/modal';
 import { initialCards } from "./scripts/cards";
-import { hideInputError, toggleButtonState, enableValidation} from './scripts/validation';
+import { hideInputError, toggleButtonState, enableValidation, clearValidation} from './scripts/validation';
 
 
 
@@ -40,7 +40,7 @@ const cardsList = document.querySelector('.places__list');
 
 
 
-
+//надо поменять классы на нужные в хтмл и цсс
 const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -51,14 +51,7 @@ const validationConfig = {
   }
 
 
-  const validationConfig1 = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'form__input_type_error',
-    errorClass: 'popup__error_visible'
-  }
+
 
 
 // Обработчик отправки формы редактирования профиля
@@ -82,19 +75,8 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
     nameInput.value = profileTitleElement.textContent;
     jobInput.value = profileDescriptionElement.textContent;
 
-    // Создаём массив из уже определённых полей ввода
-    const inputList = [nameInput, jobInput];
 
-    // Очищаем ошибки, если они остались
-    inputList.forEach((inputElement) => {
-            hideInputError(formElement, inputElement);
-        });
-
-    // Находим кнопку отправки формы
-    const buttonElement = formElement.querySelector('.popup__button');
-
-    // Обновляем состояние кнопки после заполнения полей
-    toggleButtonState(inputList, buttonElement);
+    clearValidation(formElement, validationConfig);
 
 
     openModal(editProfilePopup);
@@ -124,20 +106,8 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
     placeInput.value = '';
     placeLinkInput.value = '';
 
+clearValidation(formImageElement, validationConfig);
 
-    // Создаём массив из уже определённых полей ввода
-    const inputList = [placeInput, placeLinkInput];
-
-    // Очищаем ошибки, если они остались
-    inputList.forEach((inputElement) => {
-            hideInputError(formImageElement, inputElement);
-        });
-
-    // Находим кнопку отправки формы
-    const buttonElement = formImageElement.querySelector('.popup__button');
-
-    // Обновляем состояние кнопки после заполнения полей
-    toggleButtonState(inputList, buttonElement);
 
     openModal(addCardPopup);
 });
@@ -179,22 +149,7 @@ initialCards.forEach((card) => {
 
 
 
-
-
-
-
-//------для теста текста ошибок в попапе профиля------
-// openModal(editProfilePopup);
-
-// const dopchikForm = document.forms["edit-profile"];
-// const dopchikNameInput = dopchikForm.querySelector(".popup__input_type_name");
-// dopchikNameInput.value = 'в';
-
-// const dopchikJobInput = dopchikForm.querySelector(".popup__input_type_description");
-
-
-// setInputListener(dopchikForm, dopchikNameInput);
-enableValidation();
+enableValidation(validationConfig);
 
 
 
