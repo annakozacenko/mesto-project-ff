@@ -2,7 +2,9 @@ import './pages/index.css'; // добавьте импорт главного ф
 import { deleteCard, likeCard, addCard } from './scripts/card';
 import { openModal, closeModal, addListeners } from './scripts/modal';
 import { initialCards } from "./scripts/cards";
-import { hideInputError, toggleButtonState, enableValidation, clearValidation} from './scripts/validation';
+import { enableValidation, clearValidation} from './scripts/validation';
+import { getInitialCards, getUserInfo , editProfile, sendDeleteCardRequest, sendAddCardRequest, sendAvatarRequest} from './scripts/api';
+
 
 
 
@@ -17,6 +19,17 @@ const jobInput = formElement.querySelector(".popup__input_type_description");
 // Находим элементы страницы, куда должны быть вставлены значения полей
 const profileTitleElement = document.querySelector(".profile__title");
 const profileDescriptionElement = document.querySelector(".profile__description");
+
+//Попап редактирования аватара
+const editProfileAvatarPopup = document.querySelector(".popup_type_edit_profile-avatar");
+
+// Форма редактирования аватара
+const formAvatarElement = document.forms["edit-avatar"];
+// Поля формы
+const avatarLinkInput = formAvatarElement.querySelector(".popup__input_type_url");
+
+const profileAvatarElement = document.querySelector(".profile__image");
+
 
 
 
@@ -40,7 +53,7 @@ const cardsList = document.querySelector('.places__list');
 
 
 
-//надо поменять классы на нужные в хтмл и цсс
+
 const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -57,11 +70,17 @@ const validationConfig = {
 // Обработчик отправки формы редактирования профиля
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-    const newName = nameInput.value;
-    const newDescription = jobInput.value;
 
-    profileTitleElement.textContent = newName;
-    profileDescriptionElement.textContent = newDescription;
+    editProfile(nameInput.value, jobInput.value)
+    .then((data) => {
+        profileTitleElement.textContent = data.name;
+        profileDescriptionElement.textContent = data.about;
+
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+//нужно ли закрывать попап если ошибка?
     closeModal(editProfilePopup);
 }
 
@@ -85,16 +104,63 @@ document.querySelector(".profile__edit-button").addEventListener("click", () => 
 //Слушатель на кнопки закрытия попапа
 addListeners(editProfilePopup);
 
+//----------------------------------------
+// Обработчик отправки формы редактирования профиля
+function handleProfileAvatarFormSubmit(evt) {
+    evt.preventDefault();
 
+    sendAvatarRequest(avatarLinkInput.value)
+    .then((data) => {
+        console.log(data)
+       // profileAvatarElement.src = avatarLinkInput.value;
+
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+//нужно ли закрывать попап если ошибка?
+    closeModal(editProfileAvatarPopup);
+}
+
+//Обработчик формы редактирования профиля
+formAvatarElement.addEventListener("submit", handleProfileAvatarFormSubmit);
+
+
+//Слушатель на кнопку открытия попапа редактирования профиля
+profileAvatarElement.addEventListener("click", () => {
+    //Заполняем поля формы текущими данными профиля
+    //Очищаем поля формы
+    avatarLinkInput.value = '';
+
+
+
+
+    clearValidation(formElement, validationConfig);
+
+
+    openModal(editProfileAvatarPopup);
+});
+
+//Слушатель на кнопки закрытия попапа
+addListeners(editProfileAvatarPopup);
+
+//----------------------------------------
 
 
 // Обработчик отправки формы добавления новой карточки
 function handleFormImageSubmit(evt) {
     evt.preventDefault();
-    const newPlace = placeInput.value;
-    const newPlaceLink = placeLinkInput.value;
 
-    cardsList.prepend(addCard(newPlace, newPlaceLink, deleteCard, likeCard, openImagePopup));
+
+    sendAddCardRequest(placeInput.value, placeLinkInput.value)
+    .then((data) => {
+        cardsList.prepend(addCard(data, deleteCard, likeCard, openImagePopup));
+
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+//нужно ли закрывать попап если ошибка?
     closeModal(addCardPopup);
 }
 //Обработчик формы добавления новой карточки
@@ -142,10 +208,10 @@ addListeners(imagePopup);
 
 
 
-//Отрисовка существующих карточек
-initialCards.forEach((card) => {
-    cardsList.append(addCard(card.name, card.link, deleteCard, likeCard, openImagePopup));
-});
+//Отрисовка существующих карточек - избавиться от этого!
+//initialCards.forEach((card) => {
+ //   cardsList.append(addCard(card.name, card.link, deleteCard, likeCard, openImagePopup));
+//});
 
 
 
@@ -156,12 +222,36 @@ enableValidation(validationConfig);
 
 
 //---------------------------------------------------------------
- fetch('https://nomoreparties.co/v1/wff-cohort-27/users/me', {
-    headers: {
-      authorization: '2e6d7127-2c96-4424-9ab2-ffa0410b4c23'
-    }
-  })
-    .then(res => res.json())
-    .then((result) => {
-      console.log(result);
+// обработчик удаления карточки с удалением карточки на сервере
+function removeCard(card, cardId) {
+    sendDeleteCardRequest(cardId)
+    .then(() => {
+      deleteCard(card);
+    })
+    .catch(handleError);
+  }
+
+
+
+
+
+
+
+
+
+
+Promise.all([getUserInfo(), getInitialCards()]).then(([resUser, resCards]) => {
+console.log(resUser);
+    profileTitleElement.textContent = resUser.name;
+    profileDescriptionElement.textContent = resUser.about;
+
+    profileAvatarElement.style.backgroundImage = `url(${resUser.avatar})`;
+
+    resCards.forEach((card) => {
+        cardsList.append(addCard(card, deleteCard, likeCard, openImagePopup, resUser._id));
     });
+})
+
+
+//editProfile('Anna', 'Programmer');
+//sendCard("Курлык", "https://cs9.pikabu.ru/post_img/big/2017/08/17/6/150296003018027797.jpg");

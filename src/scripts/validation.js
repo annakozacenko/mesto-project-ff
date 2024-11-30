@@ -8,7 +8,7 @@
   };
 
 // Функция скрытия ошибки
-export const hideInputError = (formElement, inputElement, validationConfig) => {
+const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`.${inputElement.name}-input-error`);
     inputElement.classList.remove(validationConfig.inputErrorClass);
     errorElement.classList.remove(validationConfig.errorClass);
@@ -47,7 +47,7 @@ const hasInvalidInput = (inputList) => {
 
 
 // Функция для блокировки кнопки «Отправить»
-export const toggleButtonState = (inputList, buttonElement, validationConfig) => {
+const toggleButtonState = (inputList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputList)) {
       buttonElement.disabled = true;
       buttonElement.classList.add(validationConfig.inactiveButtonClass);

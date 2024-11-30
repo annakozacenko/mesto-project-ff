@@ -7,7 +7,37 @@
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  position: relative;
 }
+
+
+.profile__image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  background: url('../../../images/edit-icon.svg'), rgba(0, 0, 0, 0.8);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20%;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+  cursor: pointer;
+}
+
+
+.profile__image:hover::after {
+  opacity: 1;
+} 
+
+.profile__image:focus {
+  outline: none;
+}
+
+
 
 @media screen and (max-width: 740px) {
   .profile__image {
