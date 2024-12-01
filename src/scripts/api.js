@@ -48,7 +48,7 @@ export function sendEditProfileRequest(newName, newDescription) {
 }
 
 
-//проверить инфу о пользователе
+
 export function sendAddCardRequest(newName, newLink) {
     return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
