@@ -1,8 +1,8 @@
 import { sendCardLikeRequest, sendDeleteCardRequest } from './api';
 
 // Функция создания карточки
-export function addCard(cardData, deleteFunction, likeFunction, imageClickFunction, userId) {
-  const { name, link, owner } = cardData;
+export function createCard(cardData, deleteFunction, likeFunction, imageClickFunction, userId) {
+  const { name, link, owner, likes } = cardData;
   const cardTemplate = document.querySelector('#card-template').content;
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardTitle = card.querySelector('.card__title');
@@ -15,19 +15,22 @@ export function addCard(cardData, deleteFunction, likeFunction, imageClickFuncti
   cardTitle.textContent = name;
   cardImage.src = link;
   cardImage.alt = name;
-  cardLikeCounter.textContent = cardData.likes.length;
+  cardLikeCounter.textContent = likes.length;
 
   // Проверяем, поставил ли пользователь лайк
-  if (cardData.likes.some(like => like._id === userId)) {
+  if (likes.some(like => like._id === userId)) {
     cardLikeButton.classList.add('card__like-button_is-active');
   }
 
-  cardDeleteButton.addEventListener('click', () => deleteFunction(card, cardData._id));
+
   cardLikeButton.addEventListener('click', () => likeFunction(cardLikeButton,cardLikeCounter, cardData._id));
   cardImage.addEventListener('click', () => imageClickFunction(link, name));
 
   if (owner._id !== userId) {
     cardDeleteButton.remove();
+  }
+  else {
+    cardDeleteButton.addEventListener('click', () => deleteFunction(card, cardData._id));
   }
 
   return card;
@@ -38,6 +41,9 @@ export function deleteCard(cardElement, cardId) {
     .then(() => {
       cardElement.remove();
     })
+    .catch((err) => {
+      console.log(err);
+    });
 
 }
 
@@ -48,4 +54,7 @@ export const likeCard = (likeButton, likeСounter, cardId) => {
       likeСounter.textContent = res.likes.length;
       likeButton.classList.toggle("card__like-button_is-active");
     })
+    .catch((err) => {
+      console.log(err);
+    });
 };

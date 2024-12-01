@@ -1,5 +1,5 @@
 import './pages/index.css'; // добавьте импорт главного файла стилей
-import { deleteCard, likeCard, addCard } from './scripts/card';
+import { deleteCard, likeCard, createCard } from './scripts/card';
 import { openModal, closeModal, addListeners } from './scripts/modal';
 import { enableValidation, clearValidation } from './scripts/validation';
 import { getInitialCards, getUserInfo, sendEditProfileRequest, sendAddCardRequest, sendAvatarRequest } from './scripts/api';
@@ -64,20 +64,16 @@ const validationConfig = {
 
 
 
-function toggleButtonState (evt, isLoading) {
+function toggleButtonState(evt, isLoading) {
     const buttonElement = evt.target.querySelector(".popup__button");
-    if (isLoading) {
-        buttonElement.textContent = 'Сохранение...'
-      } else {
-        buttonElement.textContent = 'Сохранить'
-      }
+    buttonElement.textContent = isLoading ? 'Сохранение...' : 'Сохранить';
 }
 
 
 // Обработчик отправки формы редактирования профиля
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-toggleButtonState(evt, true);
+    toggleButtonState(evt, true);
     sendEditProfileRequest(nameInput.value, jobInput.value)
         .then((data) => {
             profileTitleElement.textContent = data.name;
@@ -87,7 +83,7 @@ toggleButtonState(evt, true);
         .catch((err) => {
             console.log(err);
         })
-        .finally(()=>{
+        .finally(() => {
             toggleButtonState(evt, false);
         });
 
@@ -127,7 +123,7 @@ function handleProfileAvatarFormSubmit(evt) {
         .catch((err) => {
             console.log(err);
         })
-        .finally(()=>{
+        .finally(() => {
             toggleButtonState(evt, false);
         });
 }
@@ -159,13 +155,13 @@ function handleFormImageSubmit(evt) {
     toggleButtonState(evt, true);
     sendAddCardRequest(placeInput.value, placeLinkInput.value)
         .then((card) => {
-            cardsList.prepend(addCard(card, deleteCard, likeCard, openImagePopup, userId));
+            cardsList.prepend(createCard(card, deleteCard, likeCard, openImagePopup, userId));
             closeModal(addCardPopup);
         })
         .catch((err) => {
             console.log(err);
         })
-        .finally(()=>{
+        .finally(() => {
             toggleButtonState(evt, false);
         });
 }
@@ -221,7 +217,7 @@ Promise.all([getUserInfo(), getInitialCards()]).then(([resUser, resCards]) => {
     userId = resUser._id;
 
     resCards.forEach((card) => {
-        cardsList.append(addCard(card, deleteCard, likeCard, openImagePopup, resUser._id));
+        cardsList.append(createCard(card, deleteCard, likeCard, openImagePopup, resUser._id));
     });
 })
 
