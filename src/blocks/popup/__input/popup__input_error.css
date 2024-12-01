@@ -1,18 +1,13 @@
 .popup__input_type_error {
-    border-bottom-color: red;
-  
-    /* Нижняя рамка становится красной всякий раз, 
-    когда введённые данные некорректны */
-  }
+  border-bottom-color: red;
 
-  .popup__error_visible{
-    font-family: Inter;
-font-size: 12px;
-font-weight: 400;
-line-height: 14.52px;
-text-align: left;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
-color: red;
+}
 
-  }
+.popup__error_visible {
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.21;
+  color: red;
+  margin-bottom: 10px;
+}

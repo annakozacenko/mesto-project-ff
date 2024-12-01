@@ -20,9 +20,9 @@ function handleResponse(res) {
 }
 
 export function getUserInfo() {
-    return fetch(`${config.baseUrl}/users/me`,  {
+    return fetch(`${config.baseUrl}/users/me`, {
         headers: config.headers
-      })
+    })
         .then(res => handleResponse(res))
 }
 
@@ -30,21 +30,21 @@ export function getUserInfo() {
 export function getInitialCards() {
     return fetch(`${config.baseUrl}/cards`, {
         headers: config.headers
-      })
-      .then(res => handleResponse(res))
+    })
+        .then(res => handleResponse(res))
 }
 
 
-export function editProfile(newName, newDescription) {
+export function sendEditProfileRequest(newName, newDescription) {
     return fetch(`${config.baseUrl}/users/me`, {
         method: 'PATCH',
         headers: config.headers,
         body: JSON.stringify({
-          name: newName,
-          about: newDescription
+            name: newName,
+            about: newDescription
         })
-      })
-      .then(res => handleResponse(res))
+    })
+        .then(res => handleResponse(res))
 }
 
 
@@ -57,8 +57,8 @@ export function sendAddCardRequest(newName, newLink) {
             "name": newName,
             "link": newLink,
         })
-      })
-      .then(res => handleResponse(res))
+    })
+        .then(res => handleResponse(res))
 }
 
 
@@ -66,32 +66,25 @@ export function sendDeleteCardRequest(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
         headers: config.headers
-      })
-      .then(res => handleResponse(res))
+    })
+        .then(res => handleResponse(res))
 }
 
-export function sendLikeCardRequest(cardId) {
-    return fetch(`${config.baseUrl}/cards/${cardId}`, {
-        method: 'DELETE',
-        headers: config.headers
-      })
-      .then(res => handleResponse(res))
-}
 
-export function sendDislikeCardRequest(cardId, status) {
+export function sendCardLikeRequest(cardId, status) {
     if (status) {
-        return fetch(`${config.baseUrl}/cards/${cardId}`, {
+        return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
             method: 'DELETE',
             headers: config.headers
-          })
-          .then(res => handleResponse(res))
+        })
+            .then(res => handleResponse(res))
     }
     else {
-        return fetch(`${config.baseUrl}/cards/${cardId}`, {
+        return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
             method: 'PUT',
             headers: config.headers
-          })
-          .then(res => handleResponse(res))
+        })
+            .then(res => handleResponse(res))
     }
 }
 
@@ -102,6 +95,6 @@ export function sendAvatarRequest(newAvatar) {
         body: JSON.stringify({
             "avatar": newAvatar
         })
-      })
-      .then(res => handleResponse(res))
+    })
+        .then(res => handleResponse(res))
 }
